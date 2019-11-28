@@ -18,7 +18,7 @@ public class ObjectSpawner : MonoBehaviour
         // get first finger on screen and check if it's the first frame of the finger touching the screen 
         if (Input.touchCount > 0 && Input.touches[0].phase == TouchPhase.Began)
         {
-            CreateRandomPath(placementIndicator.transform.position);
+            CreateRandomPath();
 
             Quaternion rot = Quaternion.LookRotation(Camera.main.transform.forward);
 
@@ -35,20 +35,22 @@ public class ObjectSpawner : MonoBehaviour
         }
 
     }
-    private void CreateRandomPath(Vector3 indicatorPosition)
+    private void CreateRandomPath()
     {
         List<Vector3> path = new List<Vector3>();
 
-        float x = indicatorPosition.x;
-        float y = indicatorPosition.y;
-        float z = indicatorPosition.z;
+        float x = 0;
+        float y = 0;
+        float z = 0;
+
+        path.Add(new Vector3(x, y, z));
 
         // 5 is node count
         for (int i = 0; i < 5; i++)
         {
             x = x + Random.Range(-0.1f, 0.1f);
             y = y + Random.Range(-0.1f, 0.1f);
-            z = z + Random.Range(0.0f, 0.1f);
+            z = z + Random.Range(0.0f, 0.15f);
 
             path.Add(new Vector3(x, y, z));
         }
