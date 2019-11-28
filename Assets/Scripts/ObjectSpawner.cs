@@ -6,6 +6,7 @@ public class ObjectSpawner : MonoBehaviour
 {
     public GameObject objectToSpawn;
     private PlacementIndicator placementIndicator;
+    private List<Vector3> randomPath;
 
     void Start()
     {
@@ -15,16 +16,47 @@ public class ObjectSpawner : MonoBehaviour
     void Update()
     {
         // get first finger on screen and check if it's the first frame of the finger touching the screen 
-        if(Input.touchCount > 0 && Input.touches[0].phase == TouchPhase.Began)
+        if (Input.touchCount > 0 && Input.touches[0].phase == TouchPhase.Began)
         {
-            //var cameraForward = Camera.current.transform.forward;
-            //var cameraBearing = new Vector3(cameraForward.x, 0, cameraForward.z).normalized;
-            //var cameraRotation = Quaternion.LookRotation(cameraBearing);
-            
-            GameObject obj = Instantiate(objectToSpawn, new Vector3(placementIndicator.transform.position.x - 0.02f, placementIndicator.transform.position.y, placementIndicator.transform.position.z), placementIndicator.transform.rotation);
-            GameObject obj1 = Instantiate(objectToSpawn, placementIndicator.transform.position, placementIndicator.transform.rotation);
-            GameObject obj3 = Instantiate(objectToSpawn, new Vector3(placementIndicator.transform.position.x + 0.02f, placementIndicator.transform.position.y, placementIndicator.transform.position.z), placementIndicator.transform.rotation);
+            CreateRandomPath(placementIndicator.transform.position);
+
+            Quaternion rot = Quaternion.LookRotation(Camera.main.transform.forward);
+
+            // Left stroke
+            GameObject obj1 = Instantiate(objectToSpawn, placementIndicator.transform.position, rot);
+            obj1.transform.Translate(-0.02f, 0, 0);
+
+            // Center
+            GameObject obj2 = Instantiate(objectToSpawn, placementIndicator.transform.position, rot);
+
+            // Right
+            GameObject obj3 = Instantiate(objectToSpawn, placementIndicator.transform.position, rot);
+            obj3.transform.Translate(0.02f, 0, 0);
         }
 
+    }
+    private void CreateRandomPath(Vector3 indicatorPosition)
+    {
+        List<Vector3> path = new List<Vector3>();
+
+        float x = indicatorPosition.x;
+        float y = indicatorPosition.y;
+        float z = indicatorPosition.z;
+
+        // 5 is node count
+        for (int i = 0; i < 5; i++)
+        {
+            x = x + Random.Range(-0.1f, 0.1f);
+            y = y + Random.Range(-0.1f, 0.1f);
+            z = z + Random.Range(0.0f, 0.1f);
+
+            path.Add(new Vector3(x, y, z));
+        }
+        randomPath = path;
+    }
+
+    public List<Vector3> GetPath()
+    {
+        return randomPath;
     }
 }
