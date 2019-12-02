@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class TrailFollowsPath : MonoBehaviour
 {
-    //public iTweenPath tweenPath;
     public float time;
     private ObjectSpawner objectSpawner;
 

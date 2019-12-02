@@ -32,6 +32,9 @@ public class ObjectSpawner : MonoBehaviour
             // Right
             GameObject obj3 = Instantiate(objectToSpawn, placementIndicator.transform.position, rot);
             obj3.transform.Translate(0.02f, 0, 0);
+
+            GameObject obj4 = Instantiate(objectToSpawn, placementIndicator.transform.position, rot);
+            obj4.transform.Translate(0.04f, 0, 0);
         }
 
     }
@@ -46,11 +49,11 @@ public class ObjectSpawner : MonoBehaviour
         path.Add(new Vector3(x, y, z));
 
         // 5 is node count
-        for (int i = 0; i < 5; i++)
+        for (int i = 0; i < 10; i++)
         {
             x = x + Random.Range(-0.1f, 0.1f);
             y = y + Random.Range(-0.1f, 0.1f);
-            z = z + Random.Range(0.0f, 0.15f);
+            z = z + Random.Range(0.0f, 0.3f);
 
             path.Add(new Vector3(x, y, z));
         }
